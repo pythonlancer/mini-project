@@ -1,0 +1,4 @@
+scooter, 1.99
+bike, 2.99
+motobike, 4.00
+car, 6.00

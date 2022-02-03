@@ -1,0 +1,6 @@
+Edgar, scooter
+Editor, car
+Mani, scooter
+Hakim, bike
+Ruth, car
+Garfield, motobike
