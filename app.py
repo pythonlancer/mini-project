@@ -2,6 +2,8 @@
 import os
 import products
 import couriers
+import orders
+#from prettytable import PrettyTable
 
 
 # This functions defines our Cafe Main Menu
@@ -31,7 +33,6 @@ def start_app(user):
                     print("You have been redirected to the main menu")
                     break
                 elif user_input == 1:
-                    #os.system('clear')                    
                     products.view_menu()
                 elif user_input == 2:
                     product = input('Enter the new product name: ')   
@@ -73,6 +74,45 @@ def start_app(user):
                 elif user_input == 5:
                     #os.system('cls')
                     couriers.delivery_menu()
+       
+        elif app_open == 3: # running the orders department
+            while True:
+                orders.orders_menu()
+                user_input = int(input(f'Yes {user}, what would you like to do: '))
+                if user_input == 0:
+                    print("You have been redirected to the main menu")
+                    break
+                elif user_input == 1:
+                    orders.view_menu()
+                elif user_input == 2:
+                    products.view_menu()
+                    menu_item = int(input('Enter the number for the Tea you want to buy: '))
+                    customer_name = input('Enter Customer Name: ')
+                    customer_address = input('Enter Customer Address: ')
+                    customer_phone = input('Enter Customer Phone: ')
+                    couriers.view_menu()
+                    courier_option = int(input('Enter the number for Courier of your choice: '))                   
+                    orders.make_order(menu_item,customer_name,customer_address,customer_phone,courier_option)                    
+                elif user_input == 3:
+                    orders.view_menu()
+                    old_order = int(input('Enter the number for the Order you want to update: '))
+                    products.view_menu()
+                    menu_item = int(input('Enter the number for the Tea you want to buy for this update: '))
+                    customer_name = input('Enter Customer Name: ')
+                    customer_address = input('Enter Customer Address: ')
+                    customer_phone = input('Enter Customer Phone: ')
+                    couriers.view_menu()
+                    courier_option = int(input('Enter the number of Courier of your choice: '))                   
+                    orders.update_order(old_order,menu_item,customer_name,customer_address,customer_phone,courier_option)
+                elif user_input == 4:
+                    orders.view_menu()
+                    order_id = int(input('Enter the number for the Order to change status: '))                    
+                    status_option = input('Enter new status for this order: ')                   
+                    orders.update_order_status(order_id,status_option)
+                elif user_input == 5:
+                    orders.view_menu()
+                    order_id = int(input('Enter the number for the Order you want to delete: '))                                       
+                    orders.delete_order(order_id)                    
 
 
 name = input('Please provide your name to login: ')

@@ -68,7 +68,6 @@ def update_courier(old_courier,new_courier):
         print('Failed to read couriers.txt: ', e)    
     
 
-
 def delete_courier(courier):
     
     try:
@@ -114,6 +113,26 @@ def delivery_menu():
     except Exception as e:
         print('Failed to open couriers.txt, this is the error: ', e)
 
+def get_delivery_cost(delivery_mode):
+    result = ''
+    try:
+        with open('data/delivery.txt','r') as modes:
+            lines = modes.readlines()
+                
+        for line in lines:
+            line = line.split(',')            
+            mode = line[0]
+            cost = line[1]
+            cost = cost.replace('\n','')
+            if mode == delivery_mode:
+                return cost        
+
+    except Exception as e:
+        print('Failed to open couriers.txt, this is the error: ', e)
+  
+#mode = 'scooter' 
+#print(get_delivery_cost(mode))
+
 def get_courier(courier_id):
     try:
         with open('data/couriers.txt','r') as couriers:
@@ -121,7 +140,7 @@ def get_courier(courier_id):
                 
         for line in lines:
             if lines.index(line) == courier_id:
-                return line            
+                return line           
                             
     except Exception as e:
         print('Failed to open couriers.txt, this is the error: ', e)
