@@ -1,8 +1,10 @@
 import csv
-from couriers import get_courier,get_delivery_cost
-from products import get_product
-from prettytable import PrettyTable
 import time
+
+from prettytable import PrettyTable
+
+import products
+import couriers
 
 
 def orders_menu():
@@ -33,9 +35,16 @@ def view_menu():
     number = 1
 
     try:
-        with open("data/orders.txt", 'r') as file:
+        with open("data/temp.txt", 'r') as file:
             csv_file = file.readlines()
-            for row in csv_file:                                
+            for row in csv_file: 
+                
+                # row = row.split(',')
+                # row_3 = row[3]
+                # if '|' in row_3:
+                #     row_3.replace('|','\n')
+                # row[3] = row_3
+                # print(row[3])                                         
                 row = str(number) + ',' + row
                 row = row.replace('\n','')
                 row = row.split(',')
@@ -46,23 +55,24 @@ def view_menu():
     except Exception as e:
         print('Failed to open and read orders.txt, this is the error: ', e)
 
-def make_order(menu_item,customer_name,customer_address,customer_phone,courier_option):
-                
-                menu_item -= 1
-                courier_option -= 1
-                product_cup = get_product(menu_item)
-                product_line = product_cup.split(',')
-                product = product_line[0]
-                product_price = product_line[1]
-                product_price = product_price.replace('\n','')
+def make_order(menu_item,customer_name,customer_address,customer_phone,courier_option):                                                    
 
-                courier_cup = get_courier(courier_option)
+                product = products.get_products(menu_item)
+                product_price = products.get_products_price(menu_item)
+                product_price = str(product_price)
+                # if menu_item:
+                #         print('\n*******************************************')
+                #         print(f'* YOUR PRODUCT SELECTION IS {product}:{product_price} *')
+                #         print('*******************************************')
+                # return 0                
+                courier_option -= 1       
+                courier_cup = couriers.get_courier(courier_option)
                 courier_line = courier_cup.split(',')
                 courier = courier_line[0]
                 courier_mode = courier_line[1]
                 courier_mode = courier_mode.replace('\n','')
                 courier_mode = courier_mode.replace(' ','')
-                delivery_charge = get_delivery_cost(courier_mode)
+                delivery_charge = couriers.get_delivery_cost(courier_mode)
                 delivery_charge = str(delivery_charge)
                 total_payment = float(product_price) + float (delivery_charge)
                 total_payment = str(total_payment)
@@ -83,7 +93,7 @@ def make_order(menu_item,customer_name,customer_address,customer_phone,courier_o
                 
                 try:
                     # open the orders.txt and write row
-                    with open('data/orders.txt', 'a') as file:
+                    with open('data/temp.txt', 'a') as file:
                         item = ','.join(customer_order)
                         file.write(item + '\n')
                         print('New Order was successfully added')
@@ -95,21 +105,30 @@ def make_order(menu_item,customer_name,customer_address,customer_phone,courier_o
 
 def update_order(old_order,menu_item,customer_name,customer_address,customer_phone,courier_option): #
 
-    menu_item -= 1
-    courier_option -= 1
-    product_cup = get_product(menu_item)
-    product_line = product_cup.split(',')
-    product = product_line[0]
-    product_price = product_line[1]
-    product_price = product_price.replace('\n','')
+    # menu_item -= 1
+    # courier_option -= 1
+    # product_cup = products.get_product(menu_item)
+    # product_line = product_cup.split(',')
+    # product = product_line[0]
+    # product_price = product_line[1]
+    # product_price = product_price.replace('\n','')
 
-    courier_cup = get_courier(courier_option)
+    product = products.get_products(menu_item)
+    product_price = products.get_products_price(menu_item)
+    product_price = str(product_price)
+    # if menu_item:
+    #         print('\n*******************************************')
+    #         print(f'* YOUR PRODUCT SELECTION IS {product}:{product_price} *')
+    #         print('*******************************************')
+    # return 0                
+    courier_option -= 1
+    courier_cup = couriers.get_courier(courier_option)
     courier_line = courier_cup.split(',')
     courier = courier_line[0]
     courier_mode = courier_line[1]
-    courier_mode = courier_mode.replace('\n','')
+    courier_mode = courier_mode.replace('\n','') 
     courier_mode = courier_mode.replace(' ','')
-    delivery_charge = get_delivery_cost(courier_mode)
+    delivery_charge = couriers.get_delivery_cost(courier_mode)
     delivery_charge = str(delivery_charge)
     total_payment = float(product_price) + float (delivery_charge)
     total_payment = str(total_payment)
@@ -118,7 +137,7 @@ def update_order(old_order,menu_item,customer_name,customer_address,customer_pho
     number = 1
     new_list = []
     try:
-        with open("data/orders.txt", 'r') as file:
+        with open("data/temp.txt", 'r') as file:
             csv_file = file.readlines()
             
             for row in csv_file:                                
@@ -141,11 +160,10 @@ def update_order(old_order,menu_item,customer_name,customer_address,customer_pho
                 number += 1          
             try:
                 # open the orders.txt and write rows
-                with open('data/orders.txt', 'w') as  updateOrder:
+                with open('data/temp.txt', 'w') as  updateOrder:
                     
                     updateOrder.writelines(new_list)
                     print(f'Order [# {old_order}] was successfully updated')
-                    #view_menu()
                     
             except Exception as e:
                     print('Failed to write to orders.txt, this is the error: ', e)
@@ -205,7 +223,7 @@ def delete_order(order_id):
                 number += 1      
             try:
                 # open the orders.txt and write rows
-                with open('data/orders.txt', 'w') as  deleteOrder:
+                with open('data/temp.txt', 'w') as  deleteOrder:
                     
                     deleteOrder.writelines(new_list)
                     print(f'Order [ORDER# {order_id}] was successfully deleted')

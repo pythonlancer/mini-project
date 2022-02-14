@@ -24,7 +24,7 @@ def view_menu():
             print(f'{menu_number}. {product} - £{price}')
             menu_number+=1                
     except Exception as e:
-        print('Failed to open products.txt, this is the error: ', e)
+        print('Failed to open products.txt, this is the error: ', e)    
 
 
 def add_product(product, price):    
@@ -108,4 +108,54 @@ def get_product(product_id):
     except Exception as e:
         print('Failed to open products.txt, this is the error: ', e)
 
-#print(get_product(0))
+def get_list_length():
+    menu_number = 1
+    try:
+        with open('data/products.txt','r') as products:
+            lines = products.readlines()
+                
+        for line in lines:
+            menu_number+=1                
+    except Exception as e:
+        print('Failed to open products.txt, this is the error: ', e)    
+
+    return menu_number
+
+def get_products(product_order_list):
+    new_list =[]
+    product_list = []
+    
+    product_order_list = product_order_list.split(',')
+    for item in product_order_list:
+        product = get_product(int(item)-1)
+        new_list.append(product)        
+
+    order_product_count = len(product_order_list)
+
+    for number in range(0,order_product_count):
+        x = new_list[number].replace('\n','')
+        x = x.split(',')        
+        product_list.append(x[0])
+    product_list = ' & '.join(product_list)
+    product_list = f'{product_list}'
+
+    return product_list
+
+def get_products_price(product_order_list):
+    new_list =[]
+    product_list_price = 0
+    product_order_list = product_order_list.split(',')
+    for item in product_order_list:
+        product = get_product(int(item)-1)
+        new_list.append(product)
+
+    order_product_count = len(product_order_list)
+
+    for number in range(0,order_product_count):
+        x = new_list[number].replace('\n','')
+        x = x.split(',')
+        x = x[1]
+        x = x.replace(' ','')
+        y = float(x)
+        product_list_price += y
+    return product_list_price

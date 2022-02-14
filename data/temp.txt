@@ -4,4 +4,4 @@ Brenda Mills,45 Cornerstone House,07890271863,Greek Tea, 1.99,Ruth,car, 6.00,7.9
 Jemimah Owarwo,23 Allerton Road,07234567891,Ice Tea, 2.95,Mani,scooter, 1.99,4.94,in-route
 Kezia Owarwo,24 Allerton Lane,07892134001,soda, 3.99,Edgar,scooter, 1.99,5.98,preparing
 Roshni Mistry,11 Ramsden Court,07812345687,Indonesia Tea, 2.99,Mani,scooter, 1.99,4.98,in-route
-EditorMbabazi,21 Allerton View,07459838344,Greek Tea,1.99,Hakim,bike, 2.99,4.98,preparing
+Editor Mbabazi,Allerton View,07459838344,soda,3.99,Garfield,motobike, 4.00,7.99,preparing
